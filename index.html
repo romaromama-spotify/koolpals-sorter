@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#09130e"><title>KoolPals Episode Sorter</title>
+<style>
+:root{color-scheme:dark;--bg:#09130e;--card:#112017;--line:#294033;--muted:#a4b5a9;--green:#1ed760;--white:#edf8ef;--red:#ffb7b7}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% -20%,#16482e 0%,var(--bg) 40%);color:var(--white);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}main{max-width:660px;margin:auto;padding:32px 0 58px}h1{font-size:clamp(28px,7vw,40px);letter-spacing:-1.3px;line-height:1.09;margin:10px 0 9px}h2{font-size:19px;margin:0 0 12px}p{margin:8px 0;color:var(--muted)}.eyebrow{font-size:11px;font-weight:900;letter-spacing:2.3px;color:var(--green)}.lead{font-size:15px}.card{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 17px;box-shadow:0 12px 38px #0002}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.pill{font-size:12px;padding:5px 9px;border:1px solid #345940;border-radius:100px;color:#b4dcc3;white-space:nowrap}.count{font-size:33px;font-weight:800;letter-spacing:-1px}.sub{font-size:12px;color:var(--muted)}label{display:block;font-size:13px;font-weight:650;margin:12px 0 7px}input[type=text]{background:#091710;border:1px solid #385c45;border-radius:12px;color:white;font:inherit;min-height:47px;padding:11px 12px;width:100%}input[type=checkbox]{width:20px;height:20px;accent-color:var(--green);flex:none}button,.btn{font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer;padding:13px 14px;min-height:48px;border-radius:14px;border:1px solid #3b5847;background:#192e21;color:#f3fff4;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:6px}button.primary{border-color:var(--green);background:var(--green);color:#09200f}button:disabled{opacity:.45;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0 0}.actions button{width:100%}.full{width:100%;margin-top:11px}.info{font-size:13px;color:#b8ceb9}.notice{border:1px solid #385e46;border-radius:12px;background:#11271b;padding:11px 12px;margin-top:12px;font-size:13px}.error{color:var(--red);background:#392124;border-color:#a65053}.success{color:#b1f4c2}.status{min-height:30px;margin-top:11px;font-size:13px;white-space:pre-wrap;word-break:break-word}.hidden{display:none!important}a{color:#70e69b;text-underline-offset:3px}ol{padding-left:23px;margin:12px 0;color:#d8e9d9}li{margin:7px 0}.copyline{display:flex;gap:6px}.copyline input{font-size:12px;min-width:0}.copyline button{white-space:nowrap;min-width:75px}.episode{display:grid;grid-template-columns:30px 1fr auto;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start}.episode:last-child{border:0}.epnum{font-size:12px;color:var(--muted);padding-top:3px}.epname{font-size:13px;font-weight:650;word-break:break-word}.show{color:var(--muted);font-size:12px}.date{font-size:11px;font-weight:750;color:#b4efc8;white-space:nowrap}.gridstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.checkboxrow{display:flex;gap:10px;align-items:start;margin:15px 0}.checkboxrow label{margin:0;font-size:13px;color:#dbeadd;font-weight:500}footer{font-size:12px;color:#81968a;margin-top:26px}.progress{height:8px;background:#263b2d;border-radius:10px;overflow:hidden;margin-top:12px}.progress div{height:100%;width:0;background:var(--green);transition:width .25s}.lock{color:#a7d9b5;font-size:13px}.fine{font-size:12px;color:#97a99b}.monospace{font-family:ui-monospace,monospace;overflow-wrap:anywhere}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">PERSONAL SPOTIFY TOOL</div>
+<h1>KoolPals<br>Episode Sorter <span aria-hidden="true">🎧</span></h1>
+<p class="lead">Arrange <strong>your original guesting playlist</strong> by the episode's <strong>Spotify release date</strong> — newest first, not date added.</p>
+<div class="card"><div class="row between"><div><div class="sub">YOUR PLAYLIST</div><strong>KoolPals Guesting Era</strong></div><span class="pill">Original playlist</span></div><p><a href="https://open.spotify.com/playlist/1HR56wxkfGBL0E8HFBZpnF" target="_blank" rel="noopener">Open on Spotify</a></p><div class="lock">🔐 Authorize with Spotify; no password or Client Secret is collected by this page.</div></div>
+<div class="card" id="setup"><h2>1 · Connect to Spotify</h2><p>For your personal use, create a free Spotify developer app (a Premium Spotify account is currently required by Spotify), and paste its public <strong>Client ID</strong>.</p><p class="fine">Make sure the app's Redirect URI in Spotify Developer Dashboard matches this exact address:</p><div class="copyline"><input id="redirect" readonly type="text" aria-label="Redirect URI"><button id="copyRedirect" type="button">Copy</button></div><label for="client">Spotify Client ID</label><input id="client" type="text" placeholder="Paste your Client ID" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="primary full" id="connect" type="button">Connect with Spotify</button><div class="status" id="authstatus" aria-live="polite"></div><p class="fine"><a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">Spotify Developer Dashboard</a> · Use this site's HTTPS URL (including its final slash, if any) as the app Redirect URI. Choose Web API. Never paste your Client Secret here.</p></div>
+<div class="card hidden" id="playlistPanel"><h2>2 · Check the episode order</h2><div class="gridstats"><div><div class="count" id="total">—</div><div class="sub">Playlist items</div></div><div><div class="count" id="dated">—</div><div class="sub">Dated</div></div><div><div class="count" id="changes">—</div><div class="sub">Need moving</div></div></div><div class="actions"><button id="load" type="button">Refresh playlist</button><button id="export" type="button" disabled>Download backup</button></div><div class="status" id="loadstatus" aria-live="polite"></div><div class="progress hidden" id="progress"><div id="progressBar"></div></div><div id="unknownNote" class="notice hidden"></div><div class="row between" style="margin-top:15px"><h2 style="margin:0">Preview: newest first</h2><span class="pill" id="previewCount">Top 15</span></div><div id="episodes"><p>Connect to load your playlist.</p></div><div class="checkboxrow"><input id="approval" type="checkbox"><label for="approval">I checked the preview and want to update my existing Spotify playlist. The tool will save its current order for recovery first.</label></div><button id="sort" class="primary full" disabled type="button">Sort my Spotify playlist</button><p class="fine">Fast mode updates up to 100 episode URIs at a time. If an update fails, the app tries to restore your saved order. Keep this Safari page open until it finishes.</p></div>
+<div class="card hidden" id="recoveryPanel"><h2>Restore previous order</h2><p>If a sort was interrupted, you can return your playlist to the order recorded before the last change. Your backup is saved in this browser.</p><button id="restore" class="full" type="button">Restore saved playlist order</button><div class="status" id="restoreStatus" aria-live="polite"></div></div>
+<div class="card"><h2>How to use it on iPhone</h2><ol><li>Publish this single <span class="monospace">index.html</span> file at an HTTPS address using a static web host (GitHub Pages works).</li><li>Open your published address in Safari, copy the <em>Redirect URI</em>, and add it to a Spotify developer app.</li><li>Paste the app's <em>Client ID</em> here, tap <strong>Connect with Spotify</strong>, then approve access.</li><li>Preview the sorted guestings. Download a backup if desired. Tap <strong>Sort my Spotify playlist</strong> to apply.</li><li>In the Spotify iPhone app, choose <strong>Custom order</strong> for this playlist to see the new permanent order. Optionally use Safari's Share menu → <strong>Add to Home Screen</strong>.</li></ol></div>
+<footer>Spotify is a trademark of Spotify AB. Unofficial personal playlist organizer; not affiliated with Spotify. Authorization uses OAuth with PKCE. Tokens are kept in this browser tab's session storage and are sent only to Spotify. No tracking or third-party libraries.</footer>
+</main>
+<script>
+'use strict';
+const PLAYLIST_ID='1HR56wxkfGBL0E8HFBZpnF';
+const API='https://api.spotify.com/v1';
+const SCOPES='user-read-private playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public';
+const REDIRECT=location.origin+location.pathname;
+const $=id=>document.getElementById(id);
+let source=[], sorted=[], playlistSnapshot='', playlistOwner='', userId='', busy=false;
+$('redirect').value=REDIRECT;
+$('client').value=localStorage.getItem('kp.client')||'';
+$('copyRedirect').onclick=async()=>{try{await navigator.clipboard.writeText(REDIRECT);$('copyRedirect').textContent='Copied';}catch(e){$('redirect').select();$('copyRedirect').textContent='Select text';}};
+const sleep=ms=>new Promise(ok=>setTimeout(ok,ms));
+function msg(id,message,kind=''){const el=$(id);el.textContent=message;el.className='status '+kind;}
+function tokenGet(){try{return JSON.parse(sessionStorage.getItem('kp.token')||'null');}catch{return null;}}
+function tokenSet(t){sessionStorage.setItem('kp.token',JSON.stringify(t));}
+function urlEncode(bytes){return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+async function startLogin(){
+ const client=$('client').value.trim();if(!/^[a-f0-9]{32}$/i.test(client)){msg('authstatus','Enter your 32-character Spotify Client ID.','error');return;}
+ if(location.protocol!=='https:'){msg('authstatus','Open the app using your deployed HTTPS website, not a local file.','error');return;}
+ localStorage.setItem('kp.client',client);
+ const verifier=urlEncode(crypto.getRandomValues(new Uint8Array(64)));
+ const challenge=urlEncode(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(verifier))));
+ const state=urlEncode(crypto.getRandomValues(new Uint8Array(24)));
+ sessionStorage.setItem('kp.pkce',JSON.stringify({verifier,state,client,created:Date.now()}));
+ const u=new URL('https://accounts.spotify.com/authorize');
+ Object.entries({response_type:'code',client_id:client,scope:SCOPES,redirect_uri:REDIRECT,state,code_challenge_method:'S256',code_challenge:challenge,show_dialog:'false'}).forEach(([k,v])=>u.searchParams.set(k,v));
+ location.assign(u.toString());
+}
+$('connect').onclick=startLogin;
+async function exchange(data){const body=new URLSearchParams(data);const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error_description||j.error||'Spotify login failed ('+r.status+')');return j;}
+async function handleCallback(){
+ const p=new URLSearchParams(location.search); if(!p.has('code')&&!p.has('error'))return;
+ const code=p.get('code'),state=p.get('state'),error=p.get('error');
+ history.replaceState({},'',REDIRECT);
+ if(error){msg('authstatus','Spotify authorization was not completed: '+error,'error');return;}
+ let pkce;try{pkce=JSON.parse(sessionStorage.getItem('kp.pkce'));}catch{}
+ if(!pkce||pkce.state!==state||Date.now()-pkce.created>10*60*1000){msg('authstatus','Login session expired. Tap Connect again.','error');return;}
+ try{msg('authstatus','Completing secure Spotify login…');const t=await exchange({grant_type:'authorization_code',client_id:pkce.client,code,redirect_uri:REDIRECT,code_verifier:pkce.verifier});tokenSet({access_token:t.access_token,refresh_token:t.refresh_token,expires_at:Date.now()+t.expires_in*1000-30000});sessionStorage.removeItem('kp.pkce');msg('authstatus','Connected to Spotify.','success');await loadPlaylist();}
+ catch(e){msg('authstatus','Login failed: '+e.message,'error');}
+}
+async function getAccessToken(){let t=tokenGet();if(!t)throw Error('Connect with Spotify first.');if(Date.now()<t.expires_at&&t.access_token)return t.access_token;if(!t.refresh_token)throw Error('Spotify session expired. Please reconnect.');const c=localStorage.getItem('kp.client');const v=await exchange({grant_type:'refresh_token',refresh_token:t.refresh_token,client_id:c});tokenSet({access_token:v.access_token,refresh_token:v.refresh_token||t.refresh_token,expires_at:Date.now()+v.expires_in*1000-30000});return v.access_token;}
+async function spotify(path,options={},attempt=0){
+ const token=await getAccessToken();const r=await fetch(API+path,{...options,headers:{Authorization:'Bearer '+token,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});
+ if(r.status===429){if(attempt>=4)throw Error('Spotify rate limit reached. Wait a few minutes and retry.');const retry=Number(r.headers.get('Retry-After')||'4');await sleep(Math.min(Math.max(retry*1000,1200),60000));return spotify(path,options,attempt+1);}
+ if(r.status===401&&attempt<1){const tok=tokenGet();if(tok){tok.expires_at=0;tokenSet(tok);}return spotify(path,options,attempt+1);}
+ const text=await r.text();let j;try{j=JSON.parse(text)}catch{j={}};
+ if(!r.ok)throw Error(j.error?.message||j.error||('Spotify API error HTTP '+r.status));return j;
+}
+function safe(s){const x=document.createElement('span');x.textContent=s||'';return x.innerHTML;}
+function backupKey(){return 'kp.backup.'+PLAYLIST_ID;}
+function setBusy(state){busy=state;['connect','load','export','sort','restore'].forEach(id=>$(id).disabled=state);$('sort').disabled=state||!source.length||!$('approval').checked||sameOrder();$('export').disabled=state||!source.length;}
+function sameOrder(){return source.length===sorted.length&&source.every((x,i)=>x.uid===sorted[i]?.uid);}
+function orderDate(row){if(!row.release)return 0;const s=row.release;return Date.parse(s.length===4?s+'-01-01':s.length===7?s+'-01':s)||0;}
+async function loadPlaylist(){if(busy)return;setBusy(true);$('playlistPanel').classList.remove('hidden');$('progress').classList.remove('hidden');$('progressBar').style.width='3%';msg('loadstatus','Reading your playlist from Spotify…');
+ try{
+ const [profile,meta]=await Promise.all([spotify('/me'),spotify('/playlists/'+PLAYLIST_ID)]);userId=profile.id;playlistOwner=meta.owner?.id||'';playlistSnapshot=meta.snapshot_id||'';
+ if(playlistOwner&&playlistOwner!==userId&&!meta.collaborative)throw Error('The connected Spotify account does not own or collaborate on this playlist. Please connect the playlist owner’s account.');
+ let rows=[],offset=0,total=0;
+ do{const page=await spotify('/playlists/'+PLAYLIST_ID+'/items?additional_types=episode,track&limit=50&offset='+offset);const batch=page.items||[];total=page.total||0;if(!batch.length&&offset<total)throw Error('Spotify returned an empty page; cannot reliably reorder.');rows.push(...batch);offset+=batch.length;$('progressBar').style.width=(10+Math.floor(55*(offset/Math.max(total,1))))+'%';msg('loadstatus','Loaded '+offset+' of '+total+' playlist items…');}while(offset<total);
+ source=rows.map((row,i)=>{const item=row.item||row.track||null;const uri=item?.uri||null;return{uid:i,uri,name:item?.name||'[Unavailable episode]',show:item?.show?.name||item?.album?.name||'',type:item?.type||'unavailable',release:item?.release_date||item?.album?.release_date||'',precision:item?.release_date_precision||'unknown',added:row.added_at||''};});
+ const missing=source.filter(x=>x.type==='episode'&&!x.release&&x.uri);
+ for(let i=0;i<missing.length;i++){
+  const x=missing[i];try{const info=await spotify('/episodes/'+encodeURIComponent(x.uri.split(':').pop()));x.release=info.release_date||'';x.precision=info.release_date_precision||'unknown';}catch(e){/* unknown dates fall to bottom */}
+  if(i%5===0){msg('loadstatus','Checking release dates '+(i+1)+' / '+missing.length+'…');$('progressBar').style.width=(65+Math.floor(30*((i+1)/Math.max(missing.length,1))))+'%';}
+ }
+ sorted=source.slice().sort((a,b)=>orderDate(b)-orderDate(a)||a.uid-b.uid);
+ $('total').textContent=String(source.length);$('dated').textContent=String(source.filter(x=>x.release).length);$('changes').textContent=String(source.filter((x,i)=>x.uid!==sorted[i].uid).length);
+ const missingCount=source.filter(x=>!x.release).length;const issues=source.filter(x=>!x.uri);
+ $('unknownNote').classList.toggle('hidden',!missingCount&&!issues.length);
+ $('unknownNote').textContent=issues.length?'⚠ '+issues.length+' items have no Spotify URI. Sorting is disabled to prevent accidental removal.':missingCount?('⚠ '+missingCount+' items have no Spotify release date. They stay at the bottom in their original relative order.'):' ';
+ $('progressBar').style.width='100%';$('progress').classList.add('hidden');
+ renderPreview();$('previewCount').textContent='Top '+Math.min(15,sorted.length);msg('loadstatus',source.length+' items loaded. '+(sameOrder()?'Already sorted newest first.':'Review the preview below.'),'success');$('recoveryPanel').classList.toggle('hidden',!localStorage.getItem(backupKey()));
+ }catch(e){source=[];sorted=[];msg('loadstatus','Could not load playlist: '+e.message,'error');$('progress').classList.add('hidden');}
+ finally{setBusy(false);}
+}
+function renderPreview(){let html='';for(const [i,x] of sorted.slice(0,15).entries()){html+='<div class="episode"><span class="epnum">'+(i+1)+'</span><div><div class="epname">'+safe(x.name)+'</div><div class="show">'+safe(x.show)+'</div></div><span class="date">'+safe(x.release||'Unknown')+'</span></div>';}$('episodes').innerHTML=html||'<p>No episodes found.</p>';}
+$('load').onclick=loadPlaylist;$('approval').onchange=()=>setBusy(false);
+function saveBackup(){const value={version:1,playlist:PLAYLIST_ID,created_at:new Date().toISOString(),items:source.map(({uri,name,show,release})=>({uri,name,show,release}))};localStorage.setItem(backupKey(),JSON.stringify(value));$('recoveryPanel').classList.remove('hidden');return value;}
+function downloadBackup(){if(!source.length)return;const data=saveBackup();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='koolpals-playlist-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000);msg('loadstatus','Backup downloaded. Keep it in Files for safekeeping.','success');}
+$('export').onclick=downloadBackup;
+async function verifyUnchanged(){const current=await spotify('/playlists/'+PLAYLIST_ID);if(current.snapshot_id&&playlistSnapshot&&current.snapshot_id!==playlistSnapshot)throw Error('Your playlist changed since the preview. Refresh before sorting.');}
+async function replaceOrder(uris,statusId){if(!uris.length)throw Error('There are no items to sort.');if(uris.some(u=>!/^spotify:(episode|track):[a-zA-Z0-9]+$/.test(u)))throw Error('Some playlist entries are unavailable. Aborting to protect your playlist.');
+ const totalChunks=Math.ceil(uris.length/100);$('progress').classList.remove('hidden');$('progressBar').style.width='10%';
+ for(let i=0;i<totalChunks;i++){
+  const chunk=uris.slice(i*100,(i+1)*100);const first=i===0;
+  msg(statusId,(first?'Replacing first 100 items':'Appending remaining items')+' — step '+(i+1)+' of '+totalChunks+'…');
+  await spotify('/playlists/'+PLAYLIST_ID+'/items',{method:first?'PUT':'POST',body:JSON.stringify({uris:chunk})});
+  $('progressBar').style.width=Math.floor(((i+1)/totalChunks)*100)+'%';
+ }
+ $('progress').classList.add('hidden');
+}
+async function sortPlaylist(){if(busy||!source.length||sameOrder())return;if(source.some(x=>!x.uri)){msg('loadstatus','Some entries cannot be identified. Sorting is disabled to prevent loss.','error');return;}
+ if(!$('approval').checked)return;if(!confirm('Sort '+source.length+' entries by release date, newest first? Your current order will be backed up.'))return;
+ setBusy(true);let didStart=false;
+ try{await verifyUnchanged();saveBackup();const uris=sorted.map(x=>x.uri);didStart=true;await replaceOrder(uris,'loadstatus');msg('loadstatus','Done! Your Spotify playlist is now sorted newest to oldest. Select Custom order in Spotify to see it.','success');source=sorted.slice();$('changes').textContent='0';$('approval').checked=false;const m=await spotify('/playlists/'+PLAYLIST_ID);playlistSnapshot=m.snapshot_id||'';}
+ catch(e){msg('loadstatus','Sorting failed: '+e.message+(didStart?' Trying to restore your backup…':''),'error');if(didStart){try{const saved=JSON.parse(localStorage.getItem(backupKey()));await replaceOrder(saved.items.map(x=>x.uri),'loadstatus');msg('loadstatus','Sort failed, but your previous order was restored. Reason: '+e.message,'error');}catch(re){msg('loadstatus','⚠ Sorting was interrupted and automatic recovery did not work: '+re.message+'. Keep this page open and use Restore previous order after reconnecting.','error');}}}
+ finally{$('progress').classList.add('hidden');setBusy(false);}
+}
+$('sort').onclick=sortPlaylist;
+async function restorePlaylist(){if(busy)return;const data=JSON.parse(localStorage.getItem(backupKey())||'null');if(!data?.items?.length){msg('restoreStatus','No saved backup found.','error');return;}if(!confirm('Restore '+data.items.length+' items to your saved pre-sort order?'))return;setBusy(true);
+ try{await replaceOrder(data.items.map(x=>x.uri),'restoreStatus');msg('restoreStatus','Your previous order was restored. Refresh the playlist to view it.','success');$('approval').checked=false;}
+ catch(e){msg('restoreStatus','Restore did not finish: '+e.message+'. Try again while connected to Spotify.','error');}
+ finally{$('progress').classList.add('hidden');setBusy(false);}
+}
+$('restore').onclick=restorePlaylist;
+if(localStorage.getItem(backupKey()))$('recoveryPanel').classList.remove('hidden');
+if(new URLSearchParams(location.search).has('code')||new URLSearchParams(location.search).has('error')){handleCallback();}
+else if(tokenGet()){$('playlistPanel').classList.remove('hidden');msg('authstatus','Spotify session found.','success');loadPlaylist();}
+</script></body></html>
